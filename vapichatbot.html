@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My VAPI.AI Chatbot</title>
+</head>
+<body>
+  <h1 style="text-align:center; margin-top:50px;">
+    Welcome to My Chatbot Page
+  </h1>
+
+  <!-- VAPI.AI Chatbot Integration -->
+  <script>
+  var vapiInstance = null;
+
+  const assistant = "e7b00d98-897f-4f06-ab07-1a5487db7ce9"; // Replace with your Assistant ID
+  const apiKey = "7dfba08f-0553-492f-bc89-a5d07d4daa7d"; // Replace with your Public Key
+
+  const buttonConfig = {
+    position: "bottom-right",
+    offset: "40px",
+    width: "50px",
+    height: "50px",
+    idle: {
+      color: `rgb(93, 254, 202)`,
+      type: "pill",
+      title: "Need Help?",
+      subtitle: "Chat with our AI assistant",
+      icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
+    },
+    loading: {
+      color: `rgb(93, 124, 202)`,
+      type: "pill",
+      title: "Connecting...",
+      subtitle: "Please wait",
+      icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
+    },
+    active: {
+      color: `rgb(255, 0, 0)`,
+      type: "pill",
+      title: "Chat in progress...",
+      subtitle: "End the chat",
+      icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
+    },
+  };
+
+  (function (d, t) {
+    var g = document.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+    g.defer = true;
+    g.async = true;
+    s.parentNode.insertBefore(g, s);
+    g.onload = function () {
+      vapiInstance = window.vapiSDK.run({
+        apiKey: apiKey,
+        assistant: assistant,
+        config: buttonConfig,
+      });
+    };
+  })(document, "script");
+
+      vapiInstance.on("start", () => console.log("Assistant started"));
+      vapiInstance.on("speech.start", () => console.log("Listening..."));
+      vapiInstance.on("speech.end", () => console.log("Stopped listening"));
+      vapiInstance.on("message", (msg) => console.log("Bot response:", msg));
+      vapiInstance.on("error", (err) => console.error("Error:", err));
+
+
+  </script>
+</body>
+</html>
